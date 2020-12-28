@@ -17,7 +17,6 @@ body {
   margin: 5px;
   padding: 10px;
   border: 2px solid tomato;
-  border-color: tomato;
   border-radius: 6px;
   width: 120px;
   transition: 0.3s all;

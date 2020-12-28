@@ -31,20 +31,28 @@ const defaultScoreList = [
   { name: 'Black_Fox', score: 111 },
 ];
 
-const activeClasses = {
+const activeSquareClasses = {
   BLUE: 'square-blue',
   GREEN: 'square-green',
   RED: 'square-red',
 };
 
+const animationClasses = {
+  onSquareleft: 'hinge',
+};
+
+const defaultUserName = 'Unknown';
+const lSKey = 'score_list';
+
 // GAME STATE
-let isOpenModal = false;
-let gameStatus = GAME_STATUS.PENDING;
-let timerValue = INITIAL_TIMER_VALUE;
-let scoreValue = 0;
-let squaresIdList = getRandomNumbers(SQUARES_QTY, SQUARES_QTY_ON_FIELD);
-const scoreList =
-  JSON.parse(localStorage.getItem('score_list')) || defaultScoreList;
+const gameState = {
+  gameStatus: GAME_STATUS.PENDING,
+  timerValue: INITIAL_TIMER_VALUE,
+  scoreValue: 0,
+  squaresIdList: getRandomNumbers(SQUARES_QTY, SQUARES_QTY_ON_FIELD),
+  scoreList: JSON.parse(localStorage.getItem(lSKey)) || defaultScoreList,
+};
+
 let intervalId;
 
 //HELPERS
@@ -54,7 +62,7 @@ function formattedTimeValue(sec) {
   return `0${minutes} : ${seconds > 9 ? seconds : '0' + seconds}`;
 }
 
-const activeClassesList = Object.values(activeClasses);
+const activeClassesList = Object.values(activeSquareClasses);
 
 function setActiveClassForElem(elem) {
   const randomIdx = getRandomNumbers(activeClassesList.length);
@@ -63,14 +71,14 @@ function setActiveClassForElem(elem) {
 
 function resetActiveClassForElem(elem) {
   switch (true) {
-    case elem.classList.contains(activeClasses.GREEN):
-      elem.classList.remove(activeClasses.GREEN);
+    case elem.classList.contains(activeSquareClasses.GREEN):
+      elem.classList.remove(activeSquareClasses.GREEN);
       break;
-    case elem.classList.contains(activeClasses.BLUE):
-      elem.classList.remove(activeClasses.BLUE);
+    case elem.classList.contains(activeSquareClasses.BLUE):
+      elem.classList.remove(activeSquareClasses.BLUE);
       break;
-    case elem.classList.contains(activeClasses.RED):
-      elem.classList.remove(activeClasses.RED);
+    case elem.classList.contains(activeSquareClasses.RED):
+      elem.classList.remove(activeSquareClasses.RED);
       break;
     default:
       return;
@@ -135,7 +143,7 @@ function getUniqNumbersList(primaryList, withoutZero = false) {
   }
 }
 
-// Inerface updaters
+// INTERFACE UPDATERS
 function updateTimerInterface(value) {
   refs.timerValueElem.innerHTML = formattedTimeValue(value);
 }
@@ -143,70 +151,74 @@ function updateScoreInterface(value) {
   refs.scoreValueElem.innerHTML = value;
 }
 
-// LOGIC
+// LOGIC & EVENT HANDLERS
 const handleSetTimerValue = () => {
-  timerValue -= 1;
+  gameState.timerValue -= 1;
 };
 
 const handleStartGame = () => {
-  if (gameStatus === GAME_STATUS.GAME_OVER) return;
-  if (timerValue === INITIAL_TIMER_VALUE || gameStatus === GAME_STATUS.PAUSE) {
-    const prevStatusGame = gameStatus;
-    gameStatus = GAME_STATUS.GAME_ON;
+  if (gameState.gameStatus === GAME_STATUS.GAME_OVER) return;
+  if (
+    gameState.timerValue === INITIAL_TIMER_VALUE ||
+    gameState.gameStatus === GAME_STATUS.PAUSE
+  ) {
+    const prevStatusGame = gameState.gameStatus;
+    gameState.gameStatus = GAME_STATUS.GAME_ON;
     intervalId = setInterval(() => {
       handleSetTimerValue();
-      updateTimerInterface(timerValue);
-      if (squaresIdList.length <= 1) {
-        const newRandomNumbers = getUniqNumbersList(squaresIdList);
-        squaresIdList.push(...newRandomNumbers);
-        console.log('ADDITIONAL SQUARE');
+      updateTimerInterface(gameState.timerValue);
+      if (gameState.squaresIdList.length <= 1) {
+        const newRandomNumbers = getUniqNumbersList(gameState.squaresIdList);
+        gameState.squaresIdList.push(...newRandomNumbers);
         setActiveClassForElements(newRandomNumbers, refs.squaresListElem);
       }
-      if (timerValue === 0) {
-        gameStatus = GAME_STATUS.GAME_OVER;
+      if (gameState.timerValue === 0) {
+        gameState.gameStatus = GAME_STATUS.GAME_OVER;
         clearInterval(intervalId);
-        refs.formScoreElem.innerHTML = scoreValue;
+        refs.formScoreElem.innerHTML = gameState.scoreValue;
         refs.modalElem.classList.remove('modal-closed');
       }
     }, 1000);
     if (prevStatusGame === GAME_STATUS.PENDING) {
-      setActiveClassForElements(squaresIdList, refs.squaresListElem);
+      setActiveClassForElements(gameState.squaresIdList, refs.squaresListElem);
     }
   } else {
-    gameStatus = GAME_STATUS.PAUSE;
+    gameState.gameStatus = GAME_STATUS.PAUSE;
   }
 };
 
 const handleStartNewGame = () => {
-  if (timerValue === INITIAL_TIMER_VALUE) return;
-  if (timerValue !== 0) {
+  if (gameState.timerValue === INITIAL_TIMER_VALUE) return;
+  if (gameState.timerValue !== 0) {
     clearInterval(intervalId);
   }
-  gameStatus = GAME_STATUS.PENDING;
-  scoreValue = 0;
-  updateScoreInterface(scoreValue);
-  timerValue = INITIAL_TIMER_VALUE;
-  updateTimerInterface(timerValue);
-  resetActiveClassForElements(squaresIdList, refs.squaresListElem);
-  squaresIdList = getRandomNumbers(SQUARES_QTY, SQUARES_QTY_ON_FIELD);
+  gameState.gameStatus = GAME_STATUS.PENDING;
+  gameState.scoreValue = 0;
+  updateScoreInterface(gameState.scoreValue);
+  gameState.timerValue = INITIAL_TIMER_VALUE;
+  updateTimerInterface(gameState.timerValue);
+  resetActiveClassForElements(gameState.squaresIdList, refs.squaresListElem);
+  gameState.squaresIdList = getRandomNumbers(SQUARES_QTY, SQUARES_QTY_ON_FIELD);
 };
 
 const handleClickOnSquare = e => {
   const elemId = e.target.id;
-  const isSquareActive = squaresIdList.indexOf(Number(elemId)) > -1;
-  if (gameStatus === GAME_STATUS.GAME_ON && isSquareActive) {
-    scoreValue += 1;
-    updateScoreInterface(scoreValue);
-    const newRandomNumbers = getUniqNumbersList(squaresIdList);
-    e.target.classList.add('hinge');
+  const isSquareActive = gameState.squaresIdList.indexOf(Number(elemId)) > -1;
+  if (gameState.gameStatus === GAME_STATUS.GAME_ON && isSquareActive) {
+    gameState.scoreValue += 1;
+    updateScoreInterface(gameState.scoreValue);
+    const newRandomNumbers = getUniqNumbersList(gameState.squaresIdList);
+    e.target.classList.add(animationClasses.onSquareleft);
     setTimeout(() => {
       resetActiveClassForElem(e.target);
-      e.target.classList.remove('hinge');
+      e.target.classList.remove(animationClasses.onSquareleft);
     }, 1000);
 
-    squaresIdList = [...squaresIdList.filter(item => item !== Number(elemId))];
+    gameState.squaresIdList = [
+      ...gameState.squaresIdList.filter(item => item !== Number(elemId)),
+    ];
     if (newRandomNumbers.length) {
-      squaresIdList.push(...newRandomNumbers);
+      gameState.squaresIdList.push(...newRandomNumbers);
       setActiveClassForElements(newRandomNumbers, refs.squaresListElem);
     }
   }
@@ -216,16 +228,16 @@ const handleSubmitResultForm = e => {
   e.preventDefault();
   const nameTargetValue = e.target[0].value;
   const data = {
-    name: nameTargetValue.length ? nameTargetValue : 'Unknown',
-    score: scoreValue,
+    name: nameTargetValue.length ? nameTargetValue : defaultUserName,
+    score: gameState.scoreValue,
   };
-  if (scoreList.length >= 10) {
-    scoreList.pop();
+  if (gameState.scoreList.length >= 10) {
+    gameState.scoreList.pop();
   }
-  scoreList.push(data);
-  scoreList.sort((a, b) => b.score - a.score);
-  localStorage.setItem('score_list', JSON.stringify(scoreList));
-  refs.scoreListElem.innerHTML = scoreList.map(
+  gameState.scoreList.push(data);
+  gameState.scoreList.sort((a, b) => b.score - a.score);
+  localStorage.setItem(lSKey, JSON.stringify(gameState.scoreList));
+  refs.scoreListElem.innerHTML = gameState.scoreList.map(
     item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
   );
   refs.modalElem.classList.add('modal-closed');
@@ -233,7 +245,7 @@ const handleSubmitResultForm = e => {
 
 // EVENT LISTENERS
 document.addEventListener('DOMContentLoaded', () => {
-  refs.scoreListElem.innerHTML = scoreList.map(
+  refs.scoreListElem.innerHTML = gameState.scoreList.map(
     item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
   );
 });
