@@ -5,7 +5,7 @@ const { resultsRouter } = require('./modules/results/results.router');
 try {
   const app = express();
 
-  app.use(serveStatic('public', { 'index': ['index.html', 'index.htm'] }))
+  app.use(serveStatic('public', { index: ['index.html', 'index.htm'] }));
 
   app.use(express.json());
 

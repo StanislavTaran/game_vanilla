@@ -1,5 +1,6 @@
-const db = require('../../db/db.json');
 const fs = require('fs/promises');
+const uniqid = require('uniqid');
+const db = require('../../db/db.json');
 
 const resultsPath = './src/db/db.json';
 
@@ -19,6 +20,27 @@ const getTop10Results = async (req, res) => {
   }
 };
 
+const addResult = async (req, res) => {
+  const { body } = req;
+
+  try {
+    const results = await fs
+      .readFile(resultsPath, 'utf-8')
+      .then(res => JSON.parse(res))
+      .catch(error => {
+        throw error;
+      });
+    const resultWithId = { id: uniqid(), ...body };
+    results.push(resultWithId);
+    await fs.writeFile(resultsPath, JSON.stringify(results));
+    res.status(201).json(resultWithId);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json(e);
+  }
+};
+
 module.exports = {
   getTop10Results,
+  addResult,
 };
