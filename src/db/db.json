@@ -1,5 +1,15 @@
-{
-  "John" : 110,
-  "Maria" : 100,
-  "Kelvin" : 105
-}
+[
+  {
+    "name": "John",
+    "score": 110
+  },
+  {
+    "name": "Maria",
+    "score": 100
+  },
+  {
+    "name": "Kelvin",
+    "score": 105
+  }
+]
+
