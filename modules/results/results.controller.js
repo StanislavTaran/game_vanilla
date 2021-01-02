@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 const uniqid = require('uniqid');
 const db = require('../../db/db.json');
 
-const resultsPath = './src/db/db.json';
+const resultsPath = './db/db.json';
 
 const getTop10Results = async (req, res) => {
   try {

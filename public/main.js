@@ -53,7 +53,6 @@ const gameState = {
 let intervalId;
 
 // API Requests
-
 async function fetchTopResults() {
   return fetch(`${BASE_URL}/api/results`)
     .then(res => res.json())
@@ -257,7 +256,6 @@ const handleSubmitResultForm = async e => {
 };
 
 // EVENT LISTENERS
-
 async function getRemoteResultsAndRender() {
   const results = await fetchTopResults().then(data => {
     refs.scoreListElem.innerHTML = data.map(
