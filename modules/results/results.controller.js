@@ -1,4 +1,4 @@
-const fs = require('fs/promises');
+const fs = require('fs').promises;
 const uniqid = require('uniqid');
 const db = require('../../db/db.json');
 
