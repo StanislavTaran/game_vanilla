@@ -4,7 +4,8 @@
   "description": "game mtu",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon src/index.js",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
     "format": "prettier --write \"src/**/*.js"
   },
   "devDependencies": {

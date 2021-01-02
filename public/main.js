@@ -40,7 +40,6 @@ const animationClasses = {
 };
 
 const defaultUserName = 'Unknown';
-const BASE_URL = 'http://localhost:3000';
 
 // GAME STATE
 const gameState = {
@@ -54,13 +53,13 @@ let intervalId;
 
 // API Requests
 async function fetchTopResults() {
-  return fetch(`${BASE_URL}/api/results`)
+  return fetch(`/api/results`)
     .then(res => res.json())
     .catch(e => console.log(e));
 }
 
 async function postResult(data) {
-  return fetch(`${BASE_URL}/api/results`, {
+  return fetch(`/api/results`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
