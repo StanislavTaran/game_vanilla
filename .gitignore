@@ -1,5 +1,7 @@
 # production
-# /build
+ /build
+
+/.idea
 
 # Logs
 logs

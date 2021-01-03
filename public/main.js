@@ -1,5 +1,3 @@
-import './styles.css';
-
 // REFs
 const refs = {
   startButtonElem: document.getElementById('start-button'),
@@ -42,7 +40,6 @@ const animationClasses = {
 };
 
 const defaultUserName = 'Unknown';
-const lSKey = 'score_list';
 
 // GAME STATE
 const gameState = {
@@ -50,10 +47,26 @@ const gameState = {
   timerValue: INITIAL_TIMER_VALUE,
   scoreValue: 0,
   squaresIdList: getRandomNumbers(SQUARES_QTY, SQUARES_QTY_ON_FIELD),
-  scoreList: JSON.parse(localStorage.getItem(lSKey)) || defaultScoreList,
 };
 
 let intervalId;
+
+// API Requests
+async function fetchTopResults() {
+  return fetch(`/api/results`)
+    .then(res => res.json())
+    .catch(e => console.log(e));
+}
+
+async function postResult(data) {
+  return fetch(`/api/results`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+}
 
 //HELPERS
 function formattedTimeValue(sec) {
@@ -224,31 +237,33 @@ const handleClickOnSquare = e => {
   }
 };
 
-const handleSubmitResultForm = e => {
+const handleSubmitResultForm = async e => {
   e.preventDefault();
   const nameTargetValue = e.target[0].value;
   const data = {
     name: nameTargetValue.length ? nameTargetValue : defaultUserName,
     score: gameState.scoreValue,
   };
-  if (gameState.scoreList.length >= 10) {
-    gameState.scoreList.pop();
+  try {
+    await postResult(data);
+    await getRemoteResultsAndRender();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    refs.modalElem.classList.add('modal-closed');
   }
-  gameState.scoreList.push(data);
-  gameState.scoreList.sort((a, b) => b.score - a.score);
-  localStorage.setItem(lSKey, JSON.stringify(gameState.scoreList));
-  refs.scoreListElem.innerHTML = gameState.scoreList.map(
-    item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
-  );
-  refs.modalElem.classList.add('modal-closed');
 };
 
 // EVENT LISTENERS
-document.addEventListener('DOMContentLoaded', () => {
-  refs.scoreListElem.innerHTML = gameState.scoreList.map(
-    item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
-  );
-});
+async function getRemoteResultsAndRender() {
+  const results = await fetchTopResults().then(data => {
+    refs.scoreListElem.innerHTML = data.map(
+      item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
+    );
+  });
+}
+
+document.addEventListener('DOMContentLoaded', getRemoteResultsAndRender);
 refs.startButtonElem.addEventListener('click', handleStartGame);
 refs.newGameButtonElem.addEventListener('click', handleStartNewGame);
 refs.squaresListElem.addEventListener('click', handleClickOnSquare);
