@@ -14,7 +14,7 @@ const refs = {
 
 //CONSTANTS
 const SQUARES_QTY = 70;
-const INITIAL_TIMER_VALUE = 6;
+const INITIAL_TIMER_VALUE = 60;
 const SQUARES_QTY_ON_FIELD = 5;
 
 const GAME_STATUS = {
