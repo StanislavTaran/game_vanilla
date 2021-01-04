@@ -187,7 +187,7 @@ body {
 }
 .modal__form {
   width: 100%;
-  height: 140px;
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -196,6 +196,11 @@ body {
 .modal__text {
   text-align: center;
   text-transform: capitalize;
+}
+.form__status{
+  color: red;
+  display: block;
+  text-align: center;
 }
 /*ANIMATION*/
 .hinge {
