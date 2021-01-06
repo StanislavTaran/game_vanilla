@@ -9,6 +9,7 @@ const refs = {
   formScoreElem: document.getElementById('form-score'),
   resultFormElem: document.getElementById('result-form'),
   modalElem: document.getElementById('modal'),
+  formStatusElem: document.getElementById('form-status'),
 };
 
 //CONSTANTS
@@ -164,6 +165,10 @@ function updateScoreInterface(value) {
   refs.scoreValueElem.innerHTML = value;
 }
 
+function updateFormStatus(str) {
+  refs.formStatusElem.innerHTML = str
+}
+
 // LOGIC & EVENT HANDLERS
 const handleSetTimerValue = () => {
   gameState.timerValue -= 1;
@@ -245,12 +250,17 @@ const handleSubmitResultForm = async e => {
     score: gameState.scoreValue,
   };
   try {
-    await postResult(data);
-    await getRemoteResultsAndRender();
+    const response = await postResult(data);
+    const result = await response.json();
+
+    if(result.error){
+      updateFormStatus(result.message)
+    } else {
+      await getRemoteResultsAndRender();
+      refs.modalElem.classList.add('modal-closed');
+    }
   } catch (e) {
     console.log(e);
-  } finally {
-    refs.modalElem.classList.add('modal-closed');
   }
 };
 
