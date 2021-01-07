@@ -7,11 +7,11 @@ const messages = {
 class ResWithMessage {
   constructor(
     code = 400,
-    message = messages[code] || messages[400],
+    description = messages[code] || messages[400],
     error = true,
   ) {
     this.code = code;
-    this.message = message;
+    this.message = description;
     this.error = error;
   }
 }

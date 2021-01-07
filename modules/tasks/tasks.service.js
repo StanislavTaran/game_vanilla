@@ -5,6 +5,10 @@ class ValidationException {
 }
 
 const convertRomanToArabic = inputString => {
+  if (typeof inputString !== 'string') {
+    throw new ValidationException();
+  }
+
   const matches = {
     I: 1,
     V: 5,
@@ -23,7 +27,6 @@ const convertRomanToArabic = inputString => {
   const inputStringLength = inputString.length;
 
   if (
-    typeof inputString !== 'string' ||
     inputStringLength < 1 ||
     inputStringLength > 15 ||
     !isEveryCharacterCorrect
@@ -55,6 +58,9 @@ const checkIsPalindrom = num => {
 };
 
 const checkIsValidString = s => {
+  if (typeof s !== 'string') {
+    throw new ValidationException();
+  }
   const map = {
     '(': ')',
     '{': '}',
@@ -68,12 +74,7 @@ const checkIsValidString = s => {
     item => rightParentheses.includes(item) || leftParentheses.includes(item),
   );
 
-  if (
-    typeof s !== 'string' ||
-    s.length < 1 ||
-    s.length > 104 ||
-    !isOnlyValidPar
-  ) {
+  if (s.length < 1 || s.length > 104 || !isOnlyValidPar) {
     throw new ValidationException();
   }
 

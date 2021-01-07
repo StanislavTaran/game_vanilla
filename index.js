@@ -4,7 +4,7 @@ const serveStatic = require('serve-static');
 const { resultsRouter } = require('./modules/results/results.router');
 const { tasksRouter } = require('./modules/tasks/tasks.router');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9090;
 
 const staticServehandler = serveStatic('public', {
   index: ['index.html', 'index.htm'],

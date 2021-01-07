@@ -5,7 +5,7 @@ const convertRomanToArabic = (req, res) => {
   const { body } = req;
   try {
     const result = taskServices.convertRomanToArabic(body.input);
-    res.status(200).json(result);
+    res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
       res.status(400).json(new ResWithMessage(400));
@@ -14,11 +14,11 @@ const convertRomanToArabic = (req, res) => {
   }
 };
 
-const checkIsPalindrom = (req, res) => {
+const checkIsPalindrome = (req, res) => {
   const { body } = req;
   try {
     const result = taskServices.checkIsPalindrom(body.input);
-    res.status(200).json(result);
+    res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
       res.status(400).json(new ResWithMessage(400));
@@ -31,7 +31,7 @@ const checkIsValidString = (req, res) => {
   const { body } = req;
   try {
     const result = taskServices.checkIsValidString(body.input);
-    res.status(200).json(result);
+    res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
       res.status(400).json(new ResWithMessage(400));
@@ -42,11 +42,11 @@ const checkIsValidString = (req, res) => {
 
 const createSortedArray = (req, res) => {
   const {
-    body: { arr1, arr2 },
+    body: { input },
   } = req;
   try {
-    const result = taskServices.createSortedArray(arr1, arr2);
-    res.status(200).json(result);
+    const result = taskServices.createSortedArray(input.arr1, input.arr2);
+    res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
       res.status(400).json(new ResWithMessage(400));
@@ -57,11 +57,11 @@ const createSortedArray = (req, res) => {
 
 const binaryIdxSearch = (req, res) => {
   const {
-    body: { nums, target },
+    body: { input },
   } = req;
   try {
-    const result = taskServices.binaryIdxSearch(nums, target);
-    res.status(200).json(result);
+    const result = taskServices.binaryIdxSearch(input.nums, input.target);
+    res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
       res.status(400).json(new ResWithMessage(400));
@@ -72,7 +72,7 @@ const binaryIdxSearch = (req, res) => {
 
 module.exports = {
   convertRomanToArabic,
-  checkIsPalindrom,
+  checkIsPalindrom: checkIsPalindrome,
   checkIsValidString,
   createSortedArray,
   binaryIdxSearch,
