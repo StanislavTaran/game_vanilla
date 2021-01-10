@@ -1,6 +1,6 @@
-const { ResWithMessage } = require('../../../helpers/responses');
-
-const resInvalidInput = new ResWithMessage(400);
+const {
+  validationMessages,
+} = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   {
@@ -54,46 +54,28 @@ const negative = [
       arr1: [2, 3, 3, 2, 4, 6, 7, 9, 2, 19],
       arr2: [2, 1, 4, 3, 9, 6],
     },
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.arraySort.inavalidNumbers,
   },
   {
     input: {
       arr1: [2, 3, 3, 2, 4, 6, 7, 9, 2, 19],
-      arr2: [2, 1, 122, 4, 3, 9, 6],
+      arr2: [2, 1, 122, 2, 4, 3, 9, 6],
     },
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.arraySort.notDistict,
   },
   {
     input: {
-      arr1: [13, 12, 22, 2, 12, 45, 2, 35, 44, 43, 45],
+      arr1: [2],
       arr2: [2, 12, 117, 35, 45],
     },
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.arraySort.inavalidNumbers,
   },
   {
     input: {
-      arr1: [
-        '10',
-        null,
-        false,
-        11,
-        29,
-        32,
-        45,
-        54,
-        33,
-        9,
-        5,
-        5,
-        8,
-        32,
-        11,
-        11,
-        45,
-      ],
+      arr1: {},
       arr2: [5, 32, 11, 45, 222],
     },
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.arraySort.invalidType,
   },
 ];
 

@@ -1,6 +1,6 @@
-const { ResWithMessage } = require('../../../helpers/responses');
-
-const resInvalidInput = new ResWithMessage(400);
+const {
+  validationMessages,
+} = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   {
@@ -45,21 +45,21 @@ const negative = [
       nums: [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19],
       target: null,
     },
-      expectedResult: resInvalidInput
+    expectedResult: validationMessages.nextIndex.invalidType,
   },
   {
     input: {
       nums: { a: 1, 2: 'a' },
       target: 6,
     },
-      expectedResult: resInvalidInput
+    expectedResult: validationMessages.nextIndex.invalidType,
   },
-    {
-        input: {
-            nums: [11,22,222],
-        },
-        expectedResult: resInvalidInput
+  {
+    input: {
+      nums: [11, 22, 222],
     },
+    expectedResult: validationMessages.nextIndex.invalidType,
+  },
 ];
 
 module.exports = { positive, negative };

@@ -6,7 +6,7 @@ const { postToRoute } = require('../../helpers');
 
 describe('Test positive fixtures on api route palindrome', () => {
   positive.forEach(({ input, expectedResult }) => {
-    test(`VALUE - "${input}" should return ${expectedResult}`, async () => {
+    test(`VALUE - ${input} should return - ${expectedResult}`, async () => {
       const { body } = await postToRoute('/palindrome', { input });
       expect(body.result).toBe(expectedResult);
     });
@@ -15,9 +15,9 @@ describe('Test positive fixtures on api route palindrome', () => {
 
 describe('Test negative fixtures on api route palindrome', () => {
   negative.forEach(({ input, expectedResult }) => {
-    test(`VALUE - "${input}" should throw exception`, async () => {
+    test(`VALUE - ${input} should return MESSAGE - ${expectedResult}`, async () => {
       const res = await postToRoute('/palindrome', { input });
-      expect(res.body).toEqual(expectedResult);
+      expect(res.body.message).toBe(expectedResult);
     });
   });
 });

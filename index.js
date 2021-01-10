@@ -29,8 +29,13 @@ try {
   app.use('/api/results', resultsRouter);
   app.use('/api/tasks', tasksRouter);
 
+  app.use((error, req, res, next) => {
+    if (!error.statusCode) error.statusCode = 500;
+    res.status(error.statusCode).json(error);
+  });
+
   app.listen(PORT, () =>
-    console.log(`\x1B[35mServer listening on port: 3000... \x1b[0m`),
+    console.log(`\x1B[35mServer listening on port: ${PORT}... \x1b[0m`),
   );
 } catch (e) {
   console.log(e);

@@ -1,17 +1,16 @@
 const messages = {
-  400: 'Recieved data is invalid!',
-  404: 'Page not found...',
-  500: 'Sorry... Something went wrong.',
+  400: 'Recieved data is invalid! Please, check your data one more time!',
+  500: 'Sorry... Something went wrong.Please, try later.',
 };
 
 class ResWithMessage {
   constructor(
-    code = 400,
-    description = messages[code] || messages[400],
+    statusCode = 400,
+    message = messages[statusCode] || 'Unexpected Error',
     error = true,
   ) {
-    this.code = code;
-    this.message = description;
+    this.statusCode = statusCode;
+    this.message = message;
     this.error = error;
   }
 }

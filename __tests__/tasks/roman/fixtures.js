@@ -1,6 +1,7 @@
-const { ResWithMessage } = require('../../../helpers/responses');
-
-const resInvalidInput = new ResWithMessage(400);
+const {
+  validationMessages,
+} = require('../../../modules/tasks/helpers/constants');
+const { messages } = require('../../../helpers/responses');
 
 const positive = [
   {
@@ -28,40 +29,48 @@ const positive = [
 
 const negative = [
   {
+    input: 'E500',
+    expectedResult: messages[500],
+  },
+  {
     input: 'XR',
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidCharaters,
+  },
+  {
+    input: 'XR',
+    expectedResult: validationMessages.roman.invalidCharaters,
   },
   {
     input: 'O',
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidCharaters,
   },
   {
     input: 123,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: true,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: NaN,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: ['X'],
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: { X: 'X' },
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: null,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.roman.invalidType,
   },
   {
     input: undefined,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.common.invalidFields,
   },
 ];
 

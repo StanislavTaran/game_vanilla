@@ -1,6 +1,6 @@
-const { ResWithMessage } = require('../../../helpers/responses');
-
-const resInvalidInput = new ResWithMessage(400);
+const {
+  validationMessages,
+} = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   {
@@ -48,35 +48,35 @@ const positive = [
 const negative = [
   {
     input: '{f}',
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidCharaters,
   },
   {
     input: false,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
   {
     input: NaN,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
   {
     input: 746387,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
   {
     input: null,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
   {
     input: undefined,
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.common.invalidFields,
   },
   {
     input: {},
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
   {
     input: [],
-    expectedResult: resInvalidInput,
+    expectedResult: validationMessages.brackets.invalidType,
   },
 ];
 

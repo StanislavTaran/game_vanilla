@@ -1,72 +1,82 @@
-const taskServices = require('./tasks.service');
+const { romanToArabic } = require('./services/roman');
+const { isPalindrom } = require('./services/palindrome');
+const { isValidBrackets } = require('./services/brackets');
+const { sortArray } = require('./services/arraySort');
+const { findNextIdx } = require('./services/nextIndex');
+
 const { ResWithMessage } = require('../../helpers/responses');
 
-const convertRomanToArabic = (req, res) => {
+const convertRomanToArabic = (req, res, next) => {
   const { body } = req;
   try {
-    const result = taskServices.convertRomanToArabic(body.input);
+    const result = romanToArabic(body.input);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
-      res.status(400).json(new ResWithMessage(400));
+      next(new ResWithMessage(400, e.message));
+    } else {
+      next(new ResWithMessage(500));
     }
-    res.status(500).json(new ResWithMessage(500));
   }
 };
 
-const checkIsPalindrome = (req, res) => {
+const checkIsPalindrome = (req, res, next) => {
   const { body } = req;
   try {
-    const result = taskServices.checkIsPalindrom(body.input);
+    const result = isPalindrom(body.input);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
-      res.status(400).json(new ResWithMessage(400));
+      next(new ResWithMessage(400, e.message));
+    } else {
+      next(new ResWithMessage(500));
     }
-    res.status(500).json(new ResWithMessage(500));
   }
 };
 
-const checkIsValidString = (req, res) => {
+const checkIsValidString = (req, res, next) => {
   const { body } = req;
   try {
-    const result = taskServices.checkIsValidString(body.input);
+    const result = isValidBrackets(body.input);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
-      res.status(400).json(new ResWithMessage(400));
+      next(new ResWithMessage(400, e.message));
+    } else {
+      next(new ResWithMessage(500));
     }
-    res.status(500).json(new ResWithMessage(500));
   }
 };
 
-const createSortedArray = (req, res) => {
+const createSortedArray = (req, res, next) => {
   const {
     body: { input },
   } = req;
   try {
-    const result = taskServices.createSortedArray(input.arr1, input.arr2);
+    const result = sortArray(input.arr1, input.arr2);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
-      res.status(400).json(new ResWithMessage(400));
+      next(new ResWithMessage(400, e.message));
+    } else {
+      next(new ResWithMessage(500));
     }
-    res.status(500).json(new ResWithMessage(500));
   }
 };
 
-const binaryIdxSearch = (req, res) => {
+const binaryIdxSearch = (req, res, next) => {
   const {
     body: { input },
   } = req;
   try {
-    const result = taskServices.binaryIdxSearch(input.nums, input.target);
+    const result = findNextIdx(input.nums, input.target);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
-      res.status(400).json(new ResWithMessage(400));
+      next(new ResWithMessage(400, e.message));
+    } else {
+      next(new ResWithMessage(500));
     }
-    res.status(500).json(new ResWithMessage(500));
   }
 };
 

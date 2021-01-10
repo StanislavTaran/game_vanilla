@@ -1,4 +1,5 @@
 const got = require('got');
+const { ResWithMessage } = require('../helpers/responses');
 
 const PORT = process.env.PORT || 9090;
 

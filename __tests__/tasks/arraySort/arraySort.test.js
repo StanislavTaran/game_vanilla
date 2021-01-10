@@ -6,7 +6,7 @@ const { postToRoute } = require('../../helpers');
 
 describe('Test positive fixtures on api route arraySort', () => {
   positive.forEach(({ input, expectedResult }) => {
-    test(`VALUE - "${input}" should return ${expectedResult}`, async () => {
+    test(`VALUE - "${input.arr1}" and "${input.arr2}" should return ${expectedResult}`, async () => {
       const { body } = await postToRoute('/arraySort', { input });
       expect(body.result).toEqual(expectedResult);
     });
@@ -15,9 +15,9 @@ describe('Test positive fixtures on api route arraySort', () => {
 
 describe('Test negative fixtures on api route arraySort', () => {
   negative.forEach(({ input, expectedResult }) => {
-    test(`VALUE - "${input}" should throw exception`, async () => {
+    test(`VALUE - "${input.arr1}" and "${input.arr2}" should return error`, async () => {
       const res = await postToRoute('/arraySort', { input });
-      expect(res.body).toEqual(expectedResult);
+      expect(res.body.message).toBe(expectedResult);
     });
   });
 });

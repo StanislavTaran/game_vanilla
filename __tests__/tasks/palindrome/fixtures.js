@@ -1,6 +1,6 @@
-const { ResWithMessage } = require('../../../helpers/responses');
-
-const resInvalidInput = new ResWithMessage(400);
+const {
+  validationMessages,
+} = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   { input: 111, expectedResult: true },
@@ -10,13 +10,16 @@ const positive = [
   { input: 101010101, expectedResult: true },
 ];
 const negative = [
-  { input: '2992', expectedResult: resInvalidInput },
-  { input: 'string', expectedResult: resInvalidInput },
-  { input: null, expectedResult: resInvalidInput },
-  { input: undefined, expectedResult: resInvalidInput },
-  { input: false, expectedResult: resInvalidInput },
-  { input: true, expectedResult: resInvalidInput },
-  { input: NaN, expectedResult: resInvalidInput },
+  { input: '2992', expectedResult: validationMessages.palindrome.invalidType },
+  {
+    input: 'string',
+    expectedResult: validationMessages.palindrome.invalidType,
+  },
+  { input: null, expectedResult: validationMessages.palindrome.invalidType },
+  { input: undefined, expectedResult: validationMessages.common.invalidFields },
+  { input: false, expectedResult: validationMessages.palindrome.invalidType },
+  { input: true, expectedResult: validationMessages.palindrome.invalidType },
+  { input: NaN, expectedResult: validationMessages.palindrome.invalidType },
 ];
 
 module.exports = { positive, negative };

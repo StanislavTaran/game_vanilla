@@ -6,7 +6,7 @@ const { postToRoute } = require('../../helpers');
 
 describe('Test positive fixtures on api route roman', () => {
   positive.forEach(({ input, expectedResult }) => {
-    test(`VALUE  should return ${expectedResult}`, async () => {
+    test(`VALUE - ${input} should return - ${expectedResult}`, async () => {
       const { body } = await postToRoute('/roman', { input });
       expect(body.result).toBe(expectedResult);
     });
@@ -15,9 +15,9 @@ describe('Test positive fixtures on api route roman', () => {
 
 describe('Test negative fixtures on api route roman', () => {
   negative.forEach(({ input, expectedResult }) => {
-    test(`VALUE should throw exception`, async () => {
+    test(`VALUE - ${input} should return MESSAGE - ${expectedResult}`, async () => {
       const res = await postToRoute('/roman', { input });
-      expect(res.body).toEqual(expectedResult);
+      expect(res.body.message).toBe(expectedResult);
     });
   });
 });

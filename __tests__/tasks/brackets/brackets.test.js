@@ -15,9 +15,9 @@ describe('Test positive fixtures on api route brackets', () => {
 
 describe('Test negative fixtures on api route brackets', () => {
   negative.forEach(({ input, expectedResult }) => {
-    test(`VALUE - "${input}" should throw exception`, async () => {
+    test(`VALUE - "${input}" should return error`, async () => {
       const res = await postToRoute('/brackets', { input });
-      expect(res.body).toEqual(expectedResult);
+      expect(res.body.message).toBe(expectedResult);
     });
   });
 });
