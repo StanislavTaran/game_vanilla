@@ -2,8 +2,9 @@ const express = require('express');
 const fs = require('fs');
 const serveStatic = require('serve-static');
 const { resultsRouter } = require('./modules/results/results.router');
+const { tasksRouter } = require('./modules/tasks/tasks.router');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9090;
 
 const staticServehandler = serveStatic('public', {
   index: ['index.html', 'index.htm'],
@@ -26,9 +27,15 @@ try {
   app.use(express.json());
 
   app.use('/api/results', resultsRouter);
+  app.use('/api/tasks', tasksRouter);
+
+  app.use((error, req, res, next) => {
+    if (!error.statusCode) error.statusCode = 500;
+    res.status(error.statusCode).json(error);
+  });
 
   app.listen(PORT, () =>
-    console.log(`\x1B[35mServer listening on port: 3000... \x1b[0m`),
+    console.log(`\x1B[35mServer listening on port: ${PORT}... \x1b[0m`),
   );
 } catch (e) {
   console.log(e);

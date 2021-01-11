@@ -166,7 +166,7 @@ function updateScoreInterface(value) {
 }
 
 function updateFormStatus(str) {
-  refs.formStatusElem.innerHTML = str
+  refs.formStatusElem.innerHTML = str;
 }
 
 // LOGIC & EVENT HANDLERS
@@ -253,8 +253,8 @@ const handleSubmitResultForm = async e => {
     const response = await postResult(data);
     const result = await response.json();
 
-    if(result.error){
-      updateFormStatus(result.message)
+    if (result.error) {
+      updateFormStatus(result.message);
     } else {
       await getRemoteResultsAndRender();
       refs.modalElem.classList.add('modal-closed');
