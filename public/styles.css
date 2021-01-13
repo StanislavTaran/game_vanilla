@@ -44,7 +44,8 @@ body {
   height: 80px;
   margin-bottom: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: center;
 }
 

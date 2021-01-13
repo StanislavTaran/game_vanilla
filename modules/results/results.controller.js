@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
-const uniqid = require('uniqid');
-const db = require('../../db/db.json');
+const uuid = require('uuid').v4;
 
 const resultsPath = './db/db.json';
 
@@ -30,7 +29,7 @@ const addResult = async (req, res) => {
       .catch(error => {
         throw error;
       });
-    const resultWithId = { id: uniqid(), ...body };
+    const resultWithId = { id: uuid(), ...body };
     results.push(resultWithId);
     await fs.writeFile(resultsPath, JSON.stringify(results));
     res.status(201).json(resultWithId);

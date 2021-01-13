@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Game Catch The Square</title>
-    <link rel='stylesheet' href='./styles.css' type="text/css" />
+    <link rel='stylesheet' href='/styles.css' type="text/css" />
   </head>
   <body>
     <header class="header">
       <h1 class="header__title">Catch the Square</h1>
+      <form action="/auth/logout" method="post">
+        <input class="button" type="submit" value="Log out">
+      </form>
     </header>
     <div class="modal modal-closed" id="modal">
       <div class="modal__form-wrapper">
@@ -131,5 +134,5 @@
       </div>
     </section>
   </body>
-  <script defer src="./main.js"></script>
+  <script defer src="/main.js"></script>
 </html>
