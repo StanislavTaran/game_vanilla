@@ -12,6 +12,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.link{
+  display: block;
+  text-decoration: none;
+  text-align: center;
+}
 /*BUTTONS*/
 .button {
   margin: 5px;
@@ -44,7 +50,7 @@ body {
   height: 80px;
   margin-bottom: 40px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
 }
