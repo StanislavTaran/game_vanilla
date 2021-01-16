@@ -34,9 +34,7 @@ try {
     res.status(error.statusCode).json(error);
   });
 
-  app.listen(PORT, () =>
-    console.log(`\x1B[35mServer listening on port: ${PORT}... \x1b[0m`),
-  );
+  app.listen(PORT, () => console.log(`\x1B[35mServer listening on port: ${PORT}... \x1b[0m`));
 } catch (e) {
   console.log(e);
   process.exit(1);

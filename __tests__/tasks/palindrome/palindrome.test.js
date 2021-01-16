@@ -1,6 +1,4 @@
-const {
-  checkIsPalindrome,
-} = require('../../../modules/tasks/tasks.controller');
+const { checkIsPalindrome } = require('../../../modules/tasks/tasks.controller');
 const { positive, negative } = require('./fixtures');
 const { postToRoute } = require('../../helpers');
 

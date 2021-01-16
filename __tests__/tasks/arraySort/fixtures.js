@@ -1,6 +1,4 @@
-const {
-  validationMessages,
-} = require('../../../modules/tasks/helpers/constants');
+const { validationMessages } = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   {
@@ -29,23 +27,7 @@ const positive = [
       arr1: [13, 12, 22, 344, 2, 12, 45, 2, 32, 1001, 35, 44, 43, 344, 100145],
       arr2: [2, 32, 344, 1001, 45],
     },
-    expectedResult: [
-      2,
-      2,
-      32,
-      344,
-      344,
-      1001,
-      45,
-      12,
-      12,
-      13,
-      22,
-      35,
-      43,
-      44,
-      100145,
-    ],
+    expectedResult: [2, 2, 32, 344, 344, 1001, 45, 12, 12, 13, 22, 35, 43, 44, 100145],
   },
 ];
 const negative = [

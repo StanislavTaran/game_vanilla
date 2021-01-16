@@ -1,6 +1,4 @@
-const {
-  validationMessages,
-} = require('../../../modules/tasks/helpers/constants');
+const { validationMessages } = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
   { input: 111, expectedResult: true },

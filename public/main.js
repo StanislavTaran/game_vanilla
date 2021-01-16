@@ -176,10 +176,7 @@ const handleSetTimerValue = () => {
 
 const handleStartGame = () => {
   if (gameState.gameStatus === GAME_STATUS.GAME_OVER) return;
-  if (
-    gameState.timerValue === INITIAL_TIMER_VALUE ||
-    gameState.gameStatus === GAME_STATUS.PAUSE
-  ) {
+  if (gameState.timerValue === INITIAL_TIMER_VALUE || gameState.gameStatus === GAME_STATUS.PAUSE) {
     const prevStatusGame = gameState.gameStatus;
     gameState.gameStatus = GAME_STATUS.GAME_ON;
     intervalId = setInterval(() => {
@@ -232,9 +229,7 @@ const handleClickOnSquare = e => {
       e.target.classList.remove(animationClasses.onSquareleft);
     }, 1000);
 
-    gameState.squaresIdList = [
-      ...gameState.squaresIdList.filter(item => item !== Number(elemId)),
-    ];
+    gameState.squaresIdList = [...gameState.squaresIdList.filter(item => item !== Number(elemId))];
     if (newRandomNumbers.length) {
       gameState.squaresIdList.push(...newRandomNumbers);
       setActiveClassForElements(newRandomNumbers, refs.squaresListElem);
