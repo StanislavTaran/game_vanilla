@@ -13,7 +13,7 @@ const login = async (req, res, next) => {
     if (!user) {
       return res.render('login', { error: { message: 'Incorrect login' } });
     }
-    const originalPassword = CryptoJS.AES.decrypt(user?.password, AUTH_CRYPTO_KEY).toString(CryptoJS.enc.Utf8);
+    const originalPassword = CryptoJS.AES.decrypt(user.password, AUTH_CRYPTO_KEY).toString(CryptoJS.enc.Utf8);
 
     if (originalPassword !== body.password) {
       return res.render('login', { error: { message: 'Incorrect password' } });
