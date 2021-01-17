@@ -57,8 +57,8 @@ const init = async () => {
           const [user, results] = await Promise.all([userModel.getUserById(req.session.userId), getResults()]);
 
           const sortedResults = results.sort((a, b) => b.score - a.score).slice(0, 10);
-
-          const bestUserResult = results.filter(item => item.name === user.name)?.sort((a, b) => b.score - a.score)[0];
+            // MOCK
+          const bestUserResult = 0;
 
           res.render('index', {
             userName: user.name,
