@@ -18,7 +18,9 @@ const isValidBrackets = s => {
   const rightParentheses = Object.values(map);
   const leftParentheses = Object.keys(map);
 
-  const isOnlyValidPar = [...s].every(item => rightParentheses.includes(item) || leftParentheses.includes(item));
+  const isOnlyValidPar = [...s].every(
+    item => rightParentheses.includes(item) || leftParentheses.includes(item),
+  );
   if (!isOnlyValidPar) {
     throw new ValidationException(validationMessages.brackets.invalidCharaters);
   }

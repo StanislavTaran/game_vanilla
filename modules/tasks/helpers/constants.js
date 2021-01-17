@@ -23,7 +23,8 @@ const validationMessages = {
     inavalidNumbers: 'Each element from arr2 must exist in arr1.',
   },
   nextIndex: {
-    invalidType: 'First argument must be an array with numbers inside. Second argument must be a number',
+    invalidType:
+      'First argument must be an array with numbers inside. Second argument must be a number',
   },
 };
 

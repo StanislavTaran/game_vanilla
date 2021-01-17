@@ -4,13 +4,14 @@ const uuid = require('uuid').v4;
 const serveStatic = require('serve-static');
 const cookieParser = require('cookie-parser');
 var session = require('express-session');
+const { handleGlobalErrors } = require('./helpers/globalErrorHandler');
 const { connectToDB } = require('./db/db');
 const { resultsRouter } = require('./modules/results/results.router');
 const { tasksRouter } = require('./modules/tasks/tasks.router');
 const { authRouter } = require('./modules/auth/auth.router');
 const { ResWithMessage } = require('./helpers/responses');
 const userModel = require('./modules/auth/auth.service');
-const { getResults } = require('./modules/results/results.service');
+const resultModel = require('./modules/results/results.service');
 
 const PORT = process.env.PORT || 9090;
 
@@ -23,7 +24,7 @@ const sessionConfig = {
   SESS_NAME: 'game-catch',
   SESS_SECRET: process.env.SESSION_KEY || 'sjdahdo9asdyas7ydo87tas7id6taus5rd',
   NODE_ENV: process.env.NODE_ENV === 'production',
-  COOKIE_MA: process.env.COOKIE_MA || 1000 * 60 * 60 * 2,
+  COOKIE_MA: process.env.COOKIE_MA || 1000 * 60 * 60 * 60,
 };
 
 const init = async () => {
@@ -54,16 +55,20 @@ const init = async () => {
     app.get('/', async function (req, res, next) {
       if (req.session.userId) {
         try {
-          const [user, results] = await Promise.all([userModel.getUserById(req.session.userId), getResults()]);
+          const [user, top10Results, userResults] = await Promise.all([
+            userModel.getUserById(req.session.userId),
+            resultModel.getTop10Results(),
+            resultModel.getResultsById(req.session.userId),
+          ]);
 
-          const sortedResults = results.sort((a, b) => b.score - a.score).slice(0, 10);
-            // MOCK
-          const bestUserResult = 0;
+          const bestUserResult = userResults.length
+            ? userResults.sort((a, b) => b.score - a.score)[0]['score']
+            : 0;
 
           res.render('index', {
             userName: user.name,
-            results: sortedResults,
-            bestUserResult: bestUserResult || 0,
+            results: top10Results,
+            bestUserResult: bestUserResult,
           });
         } catch (e) {
           next(new ResWithMessage(500, e.message));
@@ -78,17 +83,7 @@ const init = async () => {
     app.use('/api/results', resultsRouter);
     app.use('/api/tasks', tasksRouter);
 
-    app.use((error, req, res, next) => {
-      if (error.name === 'MongoError') {
-        res.send('Mongo error');
-      }
-
-      if (!error.statusCode) {
-        error.statusCode = 500;
-      }
-      res.status(error.statusCode).json(error);
-      console.log(error);
-    });
+    app.use(handleGlobalErrors);
 
     app.listen(PORT, () => console.log(`\x1B[35mServer listening on port: ${PORT}... \x1b[0m`));
   } catch (e) {

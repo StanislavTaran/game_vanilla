@@ -3,28 +3,31 @@ const userModel = require('./auth.service');
 const { ResWithMessage } = require('../../helpers/responses');
 const { sanitize } = require('./helpers/sanitaze');
 const { validate } = require('./helpers/validation/signUpValidate');
+const { messages } = require('./helpers/validation/messages');
 
 const AUTH_CRYPTO_KEY = 'aoidhapydoaydoa76d876as9d6atd69asd6t9asrdia8sd';
 
 const login = async (req, res, next) => {
   const { body } = req;
   try {
-    const user = await userModel.getUserByLogin(body.login);
+    const sanitizedUser = await sanitize(body);
+    const user = await userModel.getUserByLogin(sanitizedUser.login);
     if (!user) {
       return res.render('login', { error: { message: 'Incorrect login' } });
     }
-    const originalPassword = CryptoJS.AES.decrypt(user.password, AUTH_CRYPTO_KEY).toString(CryptoJS.enc.Utf8);
+    const originalPassword = CryptoJS.AES.decrypt(user.password, AUTH_CRYPTO_KEY).toString(
+      CryptoJS.enc.Utf8,
+    );
 
-    if (originalPassword !== body.password) {
+    if (originalPassword !== sanitizedUser.password) {
       return res.render('login', { error: { message: 'Incorrect password' } });
     } else {
       req.session.userId = user._id;
       res.redirect('/');
     }
   } catch (e) {
-    console.log(e);
     if (e.name === 'MongoError') {
-      return next(e);
+      next(e);
     }
     next(new ResWithMessage(500));
   }
@@ -54,15 +57,26 @@ const signup = async (req, res, next) => {
       registrationDate: new Date(),
       registrationIP: req.ip || '',
     });
-
-    res.redirect('/auth/login');
-
+    req.session.userId = createdUser._id;
+    res.redirect('/');
   } catch (e) {
     if (e.invalidInputData) {
-      return res.render('signup', { error: { message: e.message } });
+      return res.render('signup', {
+        error: { message: e.message },
+        formValues: {
+          nameValue: body.name,
+          loginValue: body.login,
+        },
+      });
     }
-    if (e.name === 'MongoError') {
-      return next(e);
+    if (e.name === 'MongoError' && e.code === 11000) {
+      return res.render('signup', {
+        error: { message: messages.signup.login.notUniq },
+        formValues: {
+          nameValue: body.name,
+          loginValue: body.login,
+        },
+      });
     }
     next(new ResWithMessage(500));
   }

@@ -262,7 +262,9 @@ const handleSubmitResultForm = async e => {
 // EVENT LISTENERS
 async function getRemoteResultsAndRender() {
   const results = await fetchTopResults().then(data => {
-    refs.scoreListElem.innerHTML = data.map(item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`);
+    refs.scoreListElem.innerHTML = data.map(
+      item => `<li class='score-table__item'>${item.name} : ${item.score}</li>`,
+    );
   });
 }
 

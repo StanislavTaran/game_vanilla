@@ -22,14 +22,18 @@ const romanToArabic = inputString => {
 
   const romanNumbers = Object.keys(matches);
 
-  const isEveryCharacterCorrect = [...inputString].every(character => romanNumbers.includes(character));
+  const isEveryCharacterCorrect = [...inputString].every(character =>
+    romanNumbers.includes(character),
+  );
 
   if (!isEveryCharacterCorrect) {
     throw new ValidationException(validationMessages.roman.invalidCharaters);
   }
 
   return [...inputString].reduce((acc, character, idx, charactersList) => {
-    return matches[charactersList[idx + 1]] > matches[character] ? acc - matches[character] : acc + matches[character];
+    return matches[charactersList[idx + 1]] > matches[character]
+      ? acc - matches[character]
+      : acc + matches[character];
   }, 0);
 };
 

@@ -6,7 +6,7 @@ const messages = {
       invalidContent: 'Only small Latin letters and numbers allowed for login!',
     },
     name: {
-      invalidLength: 'Your name should be at least 1 character!',
+      invalidLength: 'Your name should be from to 2 to 30 characters!',
       invalidContent: 'Your name must contain Latin or Cyrillic letters!',
     },
     password: {

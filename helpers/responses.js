@@ -4,7 +4,11 @@ const messages = {
 };
 
 class ResWithMessage {
-  constructor(statusCode = 400, message = messages[statusCode] || 'Unexpected Error', error = true) {
+  constructor(
+    statusCode = 400,
+    message = messages[statusCode] || 'Unexpected Error',
+    error = true,
+  ) {
     this.statusCode = statusCode;
     this.message = message;
     this.error = error;

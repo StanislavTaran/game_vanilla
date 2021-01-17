@@ -11,7 +11,7 @@ form(class='modal__form' action='/auth/signup' method='post')
         class='input'
         name='login'
         type='text'
-        value=''
+        value= formValues && formValues.loginValue
         pattern="[a-z0-9]+"
         title="Only small Latin letters and numbers allowed!"
         placeholder='Enter your login'
@@ -22,7 +22,7 @@ form(class='modal__form' action='/auth/signup' method='post')
         class='input'
         name='name'
         type='text'
-        value=''
+        value= formValues && formValues.nameValue
         pattern="[a-zА-я0-9 ]+"
         placeholder='Enter your name'
         minlength="1"
