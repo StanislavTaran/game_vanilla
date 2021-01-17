@@ -63,7 +63,7 @@ const init = async () => {
           res.render('index', {
             userName: user.name,
             results: sortedResults,
-            bestUserResult: bestUserResult?.score || 0,
+            bestUserResult: bestUserResult || 0,
           });
         } catch (e) {
           next(new ResWithMessage(500, e.message));
