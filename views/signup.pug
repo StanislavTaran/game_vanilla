@@ -1,0 +1,53 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    title SignUp Page Game Catch by Stanislav
+    style
+        include ../public/styles.css
+include includes/header
+h1(class='modal__title') Please Log In
+form(class='modal__form' action='/auth/signup' method='post')
+    label(for='login-name-input') Login :
+    input(id='login-name-input'
+        class='input'
+        name='login'
+        type='text'
+        value=''
+        pattern="[a-z0-9]+"
+        title="Only small Latin letters and numbers allowed!"
+        placeholder='Enter your login'
+        minlength="2" maxlength="15"
+        required)
+    label(for='name-input') Name :
+    input(id='name-input'
+        class='input'
+        name='name'
+        type='text'
+        value=''
+        pattern="[a-zА-я0-9 ]+"
+        placeholder='Enter your name'
+        minlength="1"
+        maxlength="35"
+        required)
+    label(for='signup-pass-input') Password :
+    input(id='signup-pass-input'
+        class='input'
+        name='password'
+        type='password'
+        value=''
+        placeholder='Enter the password'
+        minlength="8"
+        required)
+    label(for='signup-repeat-pass-input') Password :
+    input(id='signup-repeat-pass-input'
+         class='input'
+         name='confpassword'
+         type='password'
+         value=''
+         placeholder='Confirm the password'
+         minlength="8"
+         required)
+    input(class='button' type='submit' value='Sign Up')
+    a(class='link button' href='/auth/login') Log In
+    if(error.message)
+        p(style={color: 'red'})=error.message

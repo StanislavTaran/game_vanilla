@@ -7,11 +7,25 @@ head
 include includes/header
 h1(class='modal__title') Please Log In
 form(class='modal__form' action='/auth/login' method='post')
-    label(for='login-name-input') Name :
-    input(id='login-name-input' class='input' name='name' type='text' value='' placeholder='root or admin' required)
-    label(for='login-pass-input') Password :
-    input(id='login-pass-input' class='input' name='pass' type='password' value='' placeholder='the same' required)
+    label(for='login-input') Login :
+    input(id='login-input'
+        class='input'
+        name='login'
+        type='text'
+        value=''
+        placeholder='Enter your login'
+        pattern="[a-z0-9]+"
+        title="Only small Latin letters and numbers allowed!"
+        required)
+    label(for='pass-input') Password :
+    input(id='pass-input'
+        class='input'
+        name='password'
+        type='password'
+        value=''
+        placeholder='the same'
+        required)
     input(class='button' type='submit' value='Log in')
-    a(class='link button' href='#') Sign in
+    a(class='link button' href='/auth/signup') Sign Up
     if(error.message)
         p(style={color: 'red'})=error.message

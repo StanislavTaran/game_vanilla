@@ -3,7 +3,7 @@ header.header
     h3.modal__title
         if(userName)
             h3(class='modal__title')= 'Player : ' + userName
-            span= 'Best result : ' + bestUserResult.score
+            span= 'Best result : ' + bestUserResult
 
     form(action='/auth/logout' method='post')
         case userName
