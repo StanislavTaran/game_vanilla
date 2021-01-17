@@ -23,7 +23,7 @@ form(class='modal__form' action='/auth/signup' method='post')
         name='name'
         type='text'
         value= formValues && formValues.nameValue
-        pattern="[a-zА-я0-9 ]+"
+        pattern="[A-Za-zА-ЯЁё0-9 ]+"
         placeholder='Enter your name'
         minlength="1"
         maxlength="35"

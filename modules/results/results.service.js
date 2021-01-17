@@ -21,7 +21,6 @@ class Result {
       .sort({ score: -1 })
       .limit(10)
       .then(docs => {
-        console.log(docs);
         return docs;
       })
       .catch(error => {
