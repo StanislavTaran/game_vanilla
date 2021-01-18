@@ -1,17 +1,8 @@
-const fs = require('fs').promises;
-const uniqid = require('uniqid');
-const db = require('../../db/db.json');
-
-const resultsPath = './db/db.json';
-
+const { saveResult, getResults } = require('./results.service');
+const { getUserById } = require('../auth/auth.service');
 const getTop10Results = async (req, res) => {
   try {
-    const results = await fs
-      .readFile(resultsPath, 'utf-8')
-      .then(res => JSON.parse(res))
-      .catch(error => {
-        throw error;
-      });
+    const results = await getResults();
     const top10Results = results.sort((a, b) => b.score - a.score).slice(0, 10);
     res.status(200).json(top10Results);
   } catch (e) {
@@ -21,18 +12,10 @@ const getTop10Results = async (req, res) => {
 };
 
 const addResult = async (req, res) => {
-  const { body } = req;
-
+  const { body, session } = req;
+  const { name } = await getUserById(session.userId);
   try {
-    const results = await fs
-      .readFile(resultsPath, 'utf-8')
-      .then(res => JSON.parse(res))
-      .catch(error => {
-        throw error;
-      });
-    const resultWithId = { id: uniqid(), ...body };
-    results.push(resultWithId);
-    await fs.writeFile(resultsPath, JSON.stringify(results));
+    const resultWithId = await saveResult({ ...body, name });
     res.status(201).json(resultWithId);
   } catch (e) {
     console.log(e);

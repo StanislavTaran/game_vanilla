@@ -1,0 +1,42 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title Game Catch The Square
+    link(rel='stylesheet' href='/styles.css' type='text/css')
+include includes/header
+#modal.modal.modal-closed
+    include includes/resultForm
+    //.modal__form-wrapper
+    //    h2.modal__title GAME OVER
+    //    p.modal__text
+    //        | Score :
+    //        span#form-score
+    //    form#result-form.modal__form
+    //        label(for='name-input') Name
+    //        input#name-input.input(name='name' placeholder='Enter your name' maxlength='10')
+    //        button#submit-result-btn.button(type='submit')
+    //            | Save
+    //        span#form-status.form__status
+section.section
+    .section__game
+        .section__status-bar
+            img.status-bar__image(src='./images/troll.svg' alt='troll-image')
+            button#start-button.button Start
+            button#reset-button.button New Game
+            .status-bar__count-board
+                span.status-bar__text Points
+                span#score.status-bar__text-green 00
+            .status-bar__count-board
+                span.status-bar__text Time left
+                span#time.status-bar__text-red 01:00
+        ul#squares-list.section__squares-list
+            - for (let x = 0; x < 70; x++)
+                li(id=x class='section__squares-item')
+    .score-table-wrapper
+        h3.score-table__title Best Players
+        ul#score-list.score-table__list
+            each item in results
+                li.score-table__item= item.name + ':' + item.score
+script(defer='' src='/main.js')

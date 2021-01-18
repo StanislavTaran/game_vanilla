@@ -1,0 +1,17 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    title Login Page Game Catch by Stanislav
+    style
+        include ../public/styles.css
+include includes/header
+h1(class='modal__title') Please Log In
+form(class='modal__form' action='/auth/login' method='post')
+    label(for='login-name-input') Name :
+    input(id='login-name-input' class='input' name='name' type='text' value='' placeholder='root or admin' required)
+    label(for='login-pass-input') Password :
+    input(id='login-pass-input' class='input' name='pass' type='password' value='' placeholder='the same' required)
+    input(class='button' type='submit' value='Log in')
+    a(class='link button' href='#') Sign in
+    if(error.message)
+        p(style={color: 'red'})=error.message

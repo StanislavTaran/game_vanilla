@@ -1,0 +1,15 @@
+header.header
+    h1.header__title Catch the Square
+    h3.modal__title
+        if(userName)
+            h3(class='modal__title')= 'Player : ' + userName
+            span= 'Best result : ' + bestUserResult.score
+
+    form(action='/auth/logout' method='post')
+        case userName
+            when undefined
+                null
+            when userName
+                input.button(type='submit' value='Log out')
+            default
+                null
