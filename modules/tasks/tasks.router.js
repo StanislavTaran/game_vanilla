@@ -6,8 +6,8 @@ const tasksRouter = Router();
 tasksRouter.post('/roman', checkReqBody, tasksController.convertRomanToArabic);
 tasksRouter.post('/palindrome', checkReqBody, tasksController.checkIsPalindrom);
 tasksRouter.post('/brackets', checkReqBody, tasksController.checkIsValidString);
-tasksRouter.post('/arraySort', checkReqBody, tasksController.createSortedArray);
-tasksRouter.post('/nextIndex', checkReqBody, tasksController.binaryIdxSearch);
+tasksRouter.post('/arraySort', tasksController.createSortedArray);
+tasksRouter.post('/nextIndex', tasksController.binaryIdxSearch);
 
 module.exports = {
   tasksRouter,

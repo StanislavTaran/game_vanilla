@@ -1,4 +1,4 @@
-const validate = require('../helpers/validators/roman.validator');
+const validateRoman = require('../helpers/validators/roman.validator');
 
 const romanToArabic = inputString => {
   const matches = {
@@ -11,9 +11,9 @@ const romanToArabic = inputString => {
     M: 1000,
   };
 
-  validate.roman(inputString, matches);
+  const validatedData = validateRoman(inputString, matches);
 
-  return [...inputString].reduce((acc, character, idx, charactersList) => {
+  return [...validatedData].reduce((acc, character, idx, charactersList) => {
     return matches[charactersList[idx + 1]] > matches[character]
       ? acc - matches[character]
       : acc + matches[character];

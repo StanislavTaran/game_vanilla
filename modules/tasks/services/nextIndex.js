@@ -1,15 +1,14 @@
 const { validationMessages } = require('../helpers/constants');
 const { ValidationException } = require('../helpers/exceptionCreators');
+const validateNextIndex = require('../helpers/validators/nextIndex.validator');
 
-const findNextIdx = (list, inputNumber) => {
-  if (!Array.isArray(list) || typeof inputNumber !== 'number' || inputNumber === NaN) {
-    throw new ValidationException(validationMessages.nextIndex.invalidType);
-  }
+const findNextIdx = (nums, target) => {
+  const { list, inputNumber } = validateNextIndex(nums, target);
 
   let lowIdx = 0;
   let highIdx = list.length - 1;
 
-  let targetIdx = null;
+  let targetIdx = 0;
 
   if (inputNumber > list[highIdx]) {
     return highIdx + 1;

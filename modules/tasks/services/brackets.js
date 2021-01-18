@@ -1,38 +1,24 @@
 const { validationMessages } = require('../helpers/constants');
 const { ValidationException } = require('../helpers/exceptionCreators');
+const validateBrackets = require('../helpers/validators/brackets.validator');
 
 const isValidBrackets = s => {
-  if (typeof s !== 'string') {
-    throw new ValidationException(validationMessages.brackets.invalidType);
-  }
-
-  if (s.length < 1 || s.length > 104) {
-    throw new ValidationException(validationMessages.brackets.invalidLength);
-  }
   const map = {
     '(': ')',
     '{': '}',
     '[': ']',
   };
 
-  const rightParentheses = Object.values(map);
-  const leftParentheses = Object.keys(map);
-
-  const isOnlyValidPar = [...s].every(
-    item => rightParentheses.includes(item) || leftParentheses.includes(item),
-  );
-  if (!isOnlyValidPar) {
-    throw new ValidationException(validationMessages.brackets.invalidCharaters);
-  }
+  const validatedData = validateBrackets(s, map);
 
   const stack = [];
 
-  for (let idx = 0; idx < s.length; idx++) {
-    if (map[s[idx]]) {
-      stack.push(map[s[idx]]);
+  for (let idx = 0; idx < validatedData.length; idx++) {
+    if (map[validatedData[idx]]) {
+      stack.push(map[validatedData[idx]]);
     } else {
       const elem = stack.pop();
-      if (elem !== s[idx]) {
+      if (elem !== validatedData[idx]) {
         return false;
       }
     }

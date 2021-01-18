@@ -1,9 +1,9 @@
-const validate = require('../helpers/validators/palindrome.validator');
+const validatePalindrome = require('../helpers/validators/palindrome.validator');
 
 const isPalindrom = num => {
-  validate.palindrome(num);
+  const validatedData = validatePalindrome(num);
 
-  const str = num.toString();
+  const str = validatedData.toString();
   const reversedString = str.split('').reverse().join('');
   if (str === reversedString) {
     return true;

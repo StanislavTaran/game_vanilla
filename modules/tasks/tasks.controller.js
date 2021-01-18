@@ -50,10 +50,10 @@ const checkIsValidString = (req, res, next) => {
 
 const createSortedArray = (req, res, next) => {
   const {
-    body: { input },
+    body: { arr1, arr2 },
   } = req;
   try {
-    const result = sortArray(input.arr1, input.arr2);
+    const result = sortArray(arr1, arr2);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {
@@ -66,10 +66,10 @@ const createSortedArray = (req, res, next) => {
 
 const binaryIdxSearch = (req, res, next) => {
   const {
-    body: { input },
+    body: { nums, target },
   } = req;
   try {
-    const result = findNextIdx(input.nums, input.target);
+    const result = findNextIdx(nums, target);
     res.status(200).json({ result });
   } catch (e) {
     if (e.invalidInputData) {

@@ -1,11 +1,11 @@
 const { ValidationException } = require('../exceptionCreators');
 const { validationMessages } = require('../constants');
 
-const roman = (data, matches) => {
+const validateRoman = (data, matches) => {
   if (typeof data !== 'string') {
     throw new ValidationException(validationMessages.roman.invalidType);
   } else {
-    data.toUpperCase();
+    data = data.toUpperCase();
   }
 
   const inputStringLength = data.length;
@@ -37,7 +37,7 @@ const roman = (data, matches) => {
     throw new ValidationException(validationMessages.roman.incorrectContent);
   }
 
-  return true;
+  return data;
 };
 
-module.exports = { roman };
+module.exports = validateRoman;

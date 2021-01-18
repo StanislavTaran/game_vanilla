@@ -8,10 +8,9 @@ const refs = {
   scoreValueElem: document.getElementById('score'),
   formScoreElem: document.getElementById('form-score'),
   resultFormElem: document.getElementById('result-form'),
-  cancelResultElem : document.getElementById('cancel-result-btn'),
+  cancelResultElem: document.getElementById('cancel-result-btn'),
   modalElem: document.getElementById('modal'),
   formStatusElem: document.getElementById('form-status'),
-
 };
 
 //CONSTANTS
@@ -273,6 +272,6 @@ refs.startButtonElem.addEventListener('click', handleStartGame);
 refs.newGameButtonElem.addEventListener('click', handleStartNewGame);
 refs.squaresListElem.addEventListener('click', handleClickOnSquare);
 refs.resultFormElem.addEventListener('submit', handleSubmitResultForm);
-refs.cancelResultElem.addEventListener('click', ()=>{
+refs.cancelResultElem.addEventListener('click', () => {
   refs.modalElem.classList.add('modal-closed');
-})
+});
