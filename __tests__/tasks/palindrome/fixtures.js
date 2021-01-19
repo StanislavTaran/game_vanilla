@@ -42,7 +42,7 @@ const negative = [
     expectedResult: validationMessages.palindrome.invalidType,
   },
   { input: null, expectedResult: validationMessages.palindrome.invalidType },
-  { input: undefined, expectedResult: validationMessages.common.invalidFields },
+  { input: undefined, expectedResult: validationMessages.common.invalidReqBody },
   { input: false, expectedResult: validationMessages.palindrome.invalidType },
   { input: true, expectedResult: validationMessages.palindrome.invalidType },
   { input: NaN, expectedResult: validationMessages.palindrome.invalidType },

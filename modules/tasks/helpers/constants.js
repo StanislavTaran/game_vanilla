@@ -1,6 +1,6 @@
 const validationMessages = {
   common: {
-    invalidFields: 'Body must contain field input with arguments',
+    invalidReqBody: 'Body must contain field input with arguments',
   },
   roman: {
     invalidType: 'Argument type must be a string!',
@@ -19,6 +19,7 @@ const validationMessages = {
     invalidCharaters: 'Only {}()[] symbols allowed!',
   },
   arraySort: {
+    invalidReqBody: 'Body must contain fields arr1 and arr2',
     invalidType: 'Each argument (arr1 and arr2) must be an array!',
     inavalidLength:
       'Constraint: arr1 length must be >= 1 and <= 1000 , arr2 length must be > 0 and < arr1 length',
@@ -27,6 +28,7 @@ const validationMessages = {
     inavalidNumbers: 'Each element from arr2 must exist in arr1.',
   },
   nextIndex: {
+    invalidReqBody: 'Body must contain fields nums and target',
     invalidType:
       'First argument (nums) must be an array with numbers inside. Second argument (target) must be a number',
     notUniq: 'All ellements in array must be unique.',

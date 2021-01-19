@@ -39,10 +39,6 @@ const positive = [
 
 const negative = [
   {
-    input: 'E500',
-    expectedResult: messages[500],
-  },
-  {
     input: '@dd//',
     expectedResult: validationMessages.roman.invalidCharaters,
   },
@@ -88,7 +84,7 @@ const negative = [
   },
   {
     input: undefined,
-    expectedResult: validationMessages.common.invalidFields,
+    expectedResult: validationMessages.common.invalidReqBody,
   },
 ];
 

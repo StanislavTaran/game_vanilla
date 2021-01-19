@@ -86,7 +86,7 @@ const negative = [
   },
   {
     input: undefined,
-    expectedResult: validationMessages.common.invalidFields,
+    expectedResult: validationMessages.common.invalidReqBody,
   },
   {
     input: {},

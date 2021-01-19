@@ -47,7 +47,7 @@ const negative = [
   },
   {
     nums: [2, 3, 5],
-    target: "2",
+    target: '2',
 
     expectedResult: validationMessages.nextIndex.invalidType,
   },
@@ -58,7 +58,7 @@ const negative = [
     expectedResult: validationMessages.nextIndex.notUniq,
   },
   {
-    nums: [2, 3, "5", 19],
+    nums: [2, 3, '5', 19],
     target: 2,
 
     expectedResult: validationMessages.nextIndex.notInteger,
@@ -84,14 +84,14 @@ const negative = [
   {
     nums: [11, 22, 222],
 
-    expectedResult: validationMessages.nextIndex.invalidType,
+    expectedResult: validationMessages.nextIndex.invalidReqBody,
   },
   {
-    nums: ["string"],
+    nums: ['string'],
     target: 5,
 
     expectedResult: validationMessages.nextIndex.notInteger,
-  }
+  },
 ];
 
 module.exports = { positive, negative };

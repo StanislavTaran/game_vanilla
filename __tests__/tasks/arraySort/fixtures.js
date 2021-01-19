@@ -117,6 +117,12 @@ const negative = [
 
     expectedResult: validationMessages.arraySort.notInteger,
   },
+  {
+    arr1: undefined,
+    arr2: undefined,
+
+    expectedResult: validationMessages.arraySort.invalidReqBody,
+  },
 ];
 
 module.exports = { positive, negative };

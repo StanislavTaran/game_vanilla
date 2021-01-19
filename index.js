@@ -31,7 +31,7 @@ const sessionConfig = {
 const init = async () => {
   try {
     const app = express();
-    // connectToDB().then(() => console.log('MongoDB succesfuly connected!'));
+    connectToDB().then(() => console.log('MongoDB succesfuly connected!'));
     app.set('trust proxy', true);
     app.set('view engine', 'pug');
     app.use(express.json());

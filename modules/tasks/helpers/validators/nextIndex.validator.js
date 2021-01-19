@@ -7,7 +7,7 @@ const validateNextIndex = (list, inputNumber) => {
   }
 
   const isEveryIntInArray = arr =>
-      arr.every(item => typeof item === 'number' && Number.isInteger(item));
+    arr.every(item => typeof item === 'number' && Number.isInteger(item));
 
   if (!isEveryIntInArray(list)) {
     throw new ValidationException(validationMessages.nextIndex.notInteger);
@@ -18,8 +18,6 @@ const validateNextIndex = (list, inputNumber) => {
   if (uniqNums.length !== list.length) {
     throw new ValidationException(validationMessages.nextIndex.notUniq);
   }
-
-
 
   const isSortedArray = arr => {
     let sorted = true;
