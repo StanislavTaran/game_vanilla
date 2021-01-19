@@ -19,7 +19,7 @@ const validationMessages = {
     invalidCharaters: 'Only {}()[] symbols allowed!',
   },
   arraySort: {
-    invalidType: 'Each argument must be an array!',
+    invalidType: 'Each argument (arr1 and arr2) must be an array!',
     inavalidLength:
       'Constraint: arr1 length must be >= 1 and <= 1000 , arr2 length must be > 0 and < arr1 length',
     notDistict: 'All the elements of arr2 must be distinct.',
@@ -28,7 +28,7 @@ const validationMessages = {
   },
   nextIndex: {
     invalidType:
-      'First argument must be an array with numbers inside. Second argument must be a number',
+      'First argument (nums) must be an array with numbers inside. Second argument (target) must be a number',
     notUniq: 'All ellements in array must be unique.',
     notInteger: 'All the elements in array must be integer numbers.',
     notSorted: 'Numbers in array must be sorted in ascending order.',
