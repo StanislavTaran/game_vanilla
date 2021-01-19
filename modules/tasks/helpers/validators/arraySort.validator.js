@@ -7,11 +7,20 @@ const validateArraySort = (drivenArr, principalArr) => {
   }
 
   const isValidLengthDrivenArr = drivenArr.length >= 1 && drivenArr.length <= 1000;
-  const isValidLengthPrincipalArr = principalArr.length >= 1 && principalArr.length <= 1000;
+  const isValidLengthPrincipalArr =
+    principalArr.length >= 1 && principalArr.length <= drivenArr.length;
 
   if (!isValidLengthDrivenArr || !isValidLengthPrincipalArr) {
     throw new ValidationException(validationMessages.arraySort.inavalidLength);
   }
+
+  const isEveryIntInArray = arr =>
+    arr.every(item => typeof item === 'number' && Number.isInteger(item));
+
+  if (!isEveryIntInArray(principalArr) || !isEveryIntInArray(drivenArr)) {
+    throw new ValidationException(validationMessages.arraySort.notInteger);
+  }
+
   const isAllElemsInDriven = principalArr.every(item => drivenArr.includes(item));
   const uniqNumbers = [...new Set(principalArr)];
 
@@ -21,13 +30,6 @@ const validateArraySort = (drivenArr, principalArr) => {
 
   if (!isAllElemsInDriven) {
     throw new ValidationException(validationMessages.arraySort.inavalidNumbers);
-  }
-
-  const isEveryIntInArray = arr =>
-    arr.every(item => typeof item === 'number' && Number.isInteger(item));
-
-  if (!isEveryIntInArray(principalArr) || !isEveryIntInArray(drivenArr)) {
-    throw new ValidationException(validationMessages.arraySort.notInteger);
   }
 
   return { drivenArr, principalArr };

@@ -2,15 +2,23 @@ const { validationMessages } = require('../../../modules/tasks/helpers/constants
 
 const positive = [
   {
+    input: '}'.repeat(104),
+    expectedResult: false,
+  },
+  {
+    input: '}'.repeat(103),
+    expectedResult: false,
+  },
+  {
+    input: '[{}]'.repeat(26),
+    expectedResult: true,
+  },
+  {
     input: '{}',
     expectedResult: true,
   },
   {
     input: '({[]})',
-    expectedResult: true,
-  },
-  {
-    input: '{()}',
     expectedResult: true,
   },
   {
@@ -44,6 +52,18 @@ const positive = [
 ];
 
 const negative = [
+  {
+    input: '['.repeat(105),
+    expectedResult: validationMessages.brackets.invalidLength,
+  },
+  {
+    input: '{}'.repeat(53),
+    expectedResult: validationMessages.brackets.invalidLength,
+  },
+  {
+    input: '@iohusodfy7o',
+    expectedResult: validationMessages.brackets.invalidCharaters,
+  },
   {
     input: '{f}',
     expectedResult: validationMessages.brackets.invalidCharaters,

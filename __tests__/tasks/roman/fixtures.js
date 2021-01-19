@@ -7,6 +7,18 @@ const positive = [
     expectedResult: 1,
   },
   {
+    input: 'MMMCMXCIX',
+    expectedResult: 3999,
+  },
+  {
+    input: 'i',
+    expectedResult: 1,
+  },
+  {
+    input: 'mmmcmxcix',
+    expectedResult: 3999,
+  },
+  {
     input: 'IX',
     expectedResult: 9,
   },
@@ -31,12 +43,20 @@ const negative = [
     expectedResult: messages[500],
   },
   {
-    input: 'XR',
+    input: '@dd//',
     expectedResult: validationMessages.roman.invalidCharaters,
   },
   {
     input: 'XR',
     expectedResult: validationMessages.roman.invalidCharaters,
+  },
+  {
+    input: 'XXXX',
+    expectedResult: validationMessages.roman.incorrectContent,
+  },
+  {
+    input: 'MMMCMXCIXXXXXXX ',
+    expectedResult: validationMessages.roman.invalidLength,
   },
   {
     input: 'O',

@@ -5,18 +5,21 @@ const validateNextIndex = (list, inputNumber) => {
   if (!Array.isArray(list) || typeof inputNumber !== 'number' || inputNumber === NaN) {
     throw new ValidationException(validationMessages.nextIndex.invalidType);
   }
+
+  const isEveryIntInArray = arr =>
+      arr.every(item => typeof item === 'number' && Number.isInteger(item));
+
+  if (!isEveryIntInArray(list)) {
+    throw new ValidationException(validationMessages.nextIndex.notInteger);
+  }
+
   const uniqNums = [...new Set(list)];
 
   if (uniqNums.length !== list.length) {
     throw new ValidationException(validationMessages.nextIndex.notUniq);
   }
 
-  const isEveryIntInArray = arr =>
-    arr.every(item => typeof item === 'number' && Number.isInteger(item));
 
-  if (!isEveryIntInArray(list)) {
-    throw new ValidationException(validationMessages.nextIndex.notInteger);
-  }
 
   const isSortedArray = arr => {
     let sorted = true;
@@ -30,8 +33,8 @@ const validateNextIndex = (list, inputNumber) => {
     return sorted;
   };
 
-  if(!isSortedArray(list)){
-      throw new ValidationException(validationMessages.nextIndex.notSorted);
+  if (!isSortedArray(list)) {
+    throw new ValidationException(validationMessages.nextIndex.notSorted);
   }
 
   return {
