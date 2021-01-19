@@ -44,6 +44,9 @@ body {
   text-align: center;
   font-size: 26px;
 }
+
+.input:invalid {border-color: red;}
+.input:valid {border-color: green;}
 /*HEADER*/
 .header {
   background-color: tomato;

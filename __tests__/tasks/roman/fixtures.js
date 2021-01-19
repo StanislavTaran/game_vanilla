@@ -1,12 +1,22 @@
-const {
-  validationMessages,
-} = require('../../../modules/tasks/helpers/constants');
+const { validationMessages } = require('../../../modules/tasks/helpers/constants');
 const { messages } = require('../../../helpers/responses');
 
 const positive = [
   {
     input: 'I',
     expectedResult: 1,
+  },
+  {
+    input: 'MMMCMXCIX',
+    expectedResult: 3999,
+  },
+  {
+    input: 'i',
+    expectedResult: 1,
+  },
+  {
+    input: 'mmmcmxcix',
+    expectedResult: 3999,
   },
   {
     input: 'IX',
@@ -29,16 +39,20 @@ const positive = [
 
 const negative = [
   {
-    input: 'E500',
-    expectedResult: messages[500],
-  },
-  {
-    input: 'XR',
+    input: '@dd//',
     expectedResult: validationMessages.roman.invalidCharaters,
   },
   {
     input: 'XR',
     expectedResult: validationMessages.roman.invalidCharaters,
+  },
+  {
+    input: 'XXXX',
+    expectedResult: validationMessages.roman.incorrectContent,
+  },
+  {
+    input: 'MMMCMXCIXXXXXXX ',
+    expectedResult: validationMessages.roman.invalidLength,
   },
   {
     input: 'O',
@@ -70,7 +84,7 @@ const negative = [
   },
   {
     input: undefined,
-    expectedResult: validationMessages.common.invalidFields,
+    expectedResult: validationMessages.common.invalidReqBody,
   },
 ];
 

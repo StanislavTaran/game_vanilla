@@ -1,8 +1,23 @@
-const {
-  validationMessages,
-} = require('../../../modules/tasks/helpers/constants');
+const { validationMessages } = require('../../../modules/tasks/helpers/constants');
 
 const positive = [
+  {
+    input: (-2) ** 31 + 1,
+    expectedResult: false,
+  },
+  {
+    input: (-2) ** 31,
+    expectedResult: false,
+  },
+  {
+    input: 2 ** 31 - 1,
+    expectedResult: false,
+  },
+  {
+    input: 2 ** 31 - 2,
+    expectedResult: false,
+  },
+  { input: '2992', expectedResult: true },
   { input: 111, expectedResult: true },
   { input: 121, expectedResult: true },
   { input: 2992, expectedResult: true },
@@ -10,13 +25,24 @@ const positive = [
   { input: 101010101, expectedResult: true },
 ];
 const negative = [
-  { input: '2992', expectedResult: validationMessages.palindrome.invalidType },
+  {
+    input: (-2) ** 31 - 1,
+    expectedResult: validationMessages.palindrome.inavalidNumber,
+  },
+  {
+    input: 2 ** 31,
+    expectedResult: validationMessages.palindrome.inavalidNumber,
+  },
+  {
+    input: 2 ** 31 + 1,
+    expectedResult: validationMessages.palindrome.inavalidNumber,
+  },
   {
     input: 'string',
     expectedResult: validationMessages.palindrome.invalidType,
   },
   { input: null, expectedResult: validationMessages.palindrome.invalidType },
-  { input: undefined, expectedResult: validationMessages.common.invalidFields },
+  { input: undefined, expectedResult: validationMessages.common.invalidReqBody },
   { input: false, expectedResult: validationMessages.palindrome.invalidType },
   { input: true, expectedResult: validationMessages.palindrome.invalidType },
   { input: NaN, expectedResult: validationMessages.palindrome.invalidType },

@@ -1,22 +1,14 @@
-const { validationMessages } = require('../helpers/constants');
-const { ValidationException } = require('../helpers/exceptionCreators');
+const validatePalindrome = require('../helpers/validators/palindrome.validator');
 
 const isPalindrom = num => {
-  if (typeof num !== 'number' || num === NaN) {
-    throw new ValidationException(validationMessages.palindrome.invalidType);
-  }
-  const isNumberValid = (-2) ** 31 <= num && num <= 2 ** 31 - 1;
+  const validatedData = validatePalindrome(num);
 
-  if (!isNumberValid) {
-    throw new ValidationException(validationMessages.palindrome.inavalidNumber);
+  const str = validatedData.toString();
+  const reversedString = str.split('').reverse().join('');
+  if (str === reversedString) {
+    return true;
   } else {
-    const str = num.toString();
-    const reversedString = str.split('').reverse().join('');
-    if (str === reversedString) {
-      return true;
-    } else {
-      return false;
-    }
+    return false;
   }
 };
 module.exports = { isPalindrom };
