@@ -18,8 +18,7 @@ const validationMessages = {
   },
   arraySort: {
     invalidType: 'Each argument must be an array!',
-    inavalidLength:
-      'Constraint: arr1 length must be >= 1, arr2 length must be <= 1000',
+    inavalidLength: 'Constraint: arr1 length must be >= 1, arr2 length must be <= 1000',
     notDistict: 'All the elements of arr2 must be distinct.',
     inavalidNumbers: 'Each element from arr2 must exist in arr1.',
   },

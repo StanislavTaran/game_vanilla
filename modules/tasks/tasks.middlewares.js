@@ -10,9 +10,7 @@ const checkReqBody = (req, res, next) => {
     return next();
   }
 
-  res
-    .status(400)
-    .json(new ResWithMessage(400, validationMessages.common.invalidFields));
+  res.status(400).json(new ResWithMessage(400, validationMessages.common.invalidFields));
 };
 
 module.exports = { checkReqBody };

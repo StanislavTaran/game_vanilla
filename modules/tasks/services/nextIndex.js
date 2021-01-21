@@ -2,11 +2,7 @@ const { validationMessages } = require('../helpers/constants');
 const { ValidationException } = require('../helpers/exceptionCreators');
 
 const findNextIdx = (list, inputNumber) => {
-  if (
-    !Array.isArray(list) ||
-    typeof inputNumber !== 'number' ||
-    inputNumber === NaN
-  ) {
+  if (!Array.isArray(list) || typeof inputNumber !== 'number' || inputNumber === NaN) {
     throw new ValidationException(validationMessages.nextIndex.invalidType);
   }
 

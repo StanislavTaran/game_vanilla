@@ -9,9 +9,7 @@ const sortArray = (drivenArr, principalArr) => {
   if (!isValidLength) {
     throw new ValidationException(validationMessages.arraySort.inavalidLength);
   }
-  const isAllElemsInDriven = principalArr.every(item =>
-    drivenArr.includes(item),
-  );
+  const isAllElemsInDriven = principalArr.every(item => drivenArr.includes(item));
   const uniqNumbers = [...new Set(principalArr)];
 
   if (uniqNumbers.length !== principalArr.length) {
@@ -22,9 +20,7 @@ const sortArray = (drivenArr, principalArr) => {
     throw new ValidationException(validationMessages.arraySort.inavalidNumbers);
   }
 
-  const notIncludedNumbersList = drivenArr.filter(
-    item => !principalArr.includes(item),
-  );
+  const notIncludedNumbersList = drivenArr.filter(item => !principalArr.includes(item));
 
   const result = [];
   for (let idx = 0; idx < principalArr.length; idx++) {
