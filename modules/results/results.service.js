@@ -28,11 +28,21 @@ class Result {
       });
   };
 
-  getResultsById = async userId => {
+  getBestResultsById = async userId => {
     return await this.result
       .find({ userId })
       .sort({ score: -1 })
       .limit(1)
+      .then(doc => doc)
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  getGamesQtyById = async userId => {
+    return await this.result
+      .find({ userId })
+      .count()
       .then(doc => doc)
       .catch(error => {
         throw error;

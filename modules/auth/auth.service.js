@@ -15,6 +15,16 @@ class User {
       });
   };
 
+  getUsersWithoutPasswords = async (query = {}, options = {}) => {
+    return await this.user
+      .find(query, { ...options, password: 0 })
+      .sort({ name: 'asc' })
+      .then(docs => docs)
+      .catch(error => {
+        throw error;
+      });
+  };
+
   getUserById = async id => {
     return await this.user
       .findById(id)

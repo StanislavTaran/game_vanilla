@@ -27,5 +27,5 @@ section.section
         h3.score-table__title Best Players
         ul#score-list.score-table__list
             each item in results
-                li.score-table__item= item.name + ':' + item.score
+                li(class='score-table__item')= item.name + ':' + item.score
 script(defer='' src='/main.js')

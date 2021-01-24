@@ -1,15 +1,12 @@
 header.header
+
     h1.header__title Catch the Square
     h3.modal__title
-        if(userName)
-            h3(class='modal__title')= 'Player : ' + userName
+        if(user && user.name)
+            h3(class='modal__title')= 'Player : ' + user.name
             span= 'Best result : ' + bestUserResult
 
     form(action='/auth/logout' method='post')
-        case userName
-            when undefined
-                null
-            when userName
-                input.button(type='submit' value='Log out')
-            default
-                null
+        if(user && user.name)
+            input.button(type='submit' value='Log out')
+    include navbar

@@ -9,7 +9,8 @@ const { connectToDB } = require('./db/db');
 const { resultsRouter } = require('./modules/results/results.router');
 const { tasksRouter } = require('./modules/tasks/tasks.router');
 const { authRouter } = require('./modules/auth/auth.router');
-const {rootRouter} = require('./modules/root/root.router')
+const { rootRouter } = require('./modules/root/root.router');
+const { adminRouter } = require('./modules/admin/admin.router');
 const { ResWithMessage } = require('./helpers/responses');
 const userModel = require('./modules/auth/auth.service');
 const resultModel = require('./modules/results/results.service');
@@ -55,8 +56,9 @@ const init = async () => {
 
     app.use(staticServehandler);
 
-    app.use('/', rootRouter)
+    app.use('/', rootRouter);
     app.use('/auth', authRouter);
+    app.use('/admin', adminRouter);
     app.use('/api/results', resultsRouter);
     app.use('/api/tasks', tasksRouter);
 

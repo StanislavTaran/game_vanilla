@@ -1,0 +1,51 @@
+doctype html
+head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+    title Game Catch The Square
+    link(rel='stylesheet' href='/styles.css' type='text/css')
+    link(rel='stylesheet' href='/styles/admin-styles.css' type='text/css')
+include includes/header
+h2(class="modal__title") Admin Page
+table(class='user-table' cols="7" cellpadding="8")
+    caption Gamers's Statistics
+    tr(class="user-table__row")
+        th ID
+        th Login
+        th Name
+        th Reg IP
+        th Reg Date
+        th Game stats
+    tr
+        td
+        td
+        td
+            form(action='/admin' method='get')
+                input(type='text' name='name')
+        td
+        td
+        td
+    - for (let x = 0; x < users.docs.length; x++)
+
+        tr
+            td #{users.docs[x]._id}
+            td #{users.docs[x].login}
+            td #{users.docs[x].name}
+            td #{users.docs[x].registrationIP ||  '-'}
+            td #{users.docs[x].registrationDate ||  '-'}
+            td
+                span(class="user-table__text") Total game count:  #{users.docs[x].numberOfGames}
+                span(class="user-table__text") top score: #{users.docs[x].bestUserResult}
+
+div(class="admin__paginate")
+
+    if(users.hasPrevPage)
+        a(class=`admin__paginate-button ` href=`/admin?page=1&limit=${users.limit}`) 1
+        a(class=`admin__paginate-button ` href=`/admin?page=${users.prevPage}&limit=${users.limit}`) Prev
+
+    span(class="admin__paginate-text") #{users.page || 1}
+
+    if(users.hasNextPage)
+        a(class="admin__paginate-button" href=`/admin?page=${users.nextPage}&limit=${users.limit}`) Next
+        a(class=`admin__paginate-button ` href=`/admin?page=${users.totalPages}&limit=${users.limit}`) #{users.totalPages}
