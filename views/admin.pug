@@ -20,6 +20,8 @@ table(class='user-table' cols="7" cellpadding="8")
     tr
         td
         td
+            form(action='/admin' method='get')
+                input(type='text' name='login')
         td
             form(action='/admin' method='get')
                 input(type='text' name='name')
@@ -33,7 +35,7 @@ table(class='user-table' cols="7" cellpadding="8")
             td #{users.docs[x].login}
             td #{users.docs[x].name}
             td #{users.docs[x].registrationIP ||  '-'}
-            td #{users.docs[x].registrationDate ||  '-'}
+            td #{users.docs[x].registrationDate||  '-'}
             td
                 span(class="user-table__text") Total game count:  #{users.docs[x].numberOfGames}
                 span(class="user-table__text") top score: #{users.docs[x].bestUserResult}
@@ -44,7 +46,8 @@ div(class="admin__paginate")
         a(class=`admin__paginate-button ` href=`/admin?page=1&limit=${users.limit}`) 1
         a(class=`admin__paginate-button ` href=`/admin?page=${users.prevPage}&limit=${users.limit}`) Prev
 
-    span(class="admin__paginate-text") #{users.page || 1}
+    if(users.hasPrevPage || users.hasNextPage)
+        span(class="admin__paginate-text") Page #{users.page || 1}
 
     if(users.hasNextPage)
         a(class="admin__paginate-button" href=`/admin?page=${users.nextPage}&limit=${users.limit}`) Next

@@ -5,18 +5,18 @@ const getUsersStats = async (req, res, next) => {
   try {
     const { user } = req;
 
+    const queryOptions = {
+      name: { $regex: `${req.query.name || '.*'}` },
+      login: { $regex: `${req.query.login || '.*'}` },
+    };
+
     const paginationOptions = {
       page: +req.query.page || 1,
       limit: req.query.limit || 5,
     };
 
-    const users = await userModel.user.paginate(
-      {
-        name: { $regex: `${req.query.name || '.*'}` },
-      },
-      paginationOptions,
-    );
-  console.log(users)
+    const users = await userModel.user.paginate(queryOptions, paginationOptions);
+
     const bestResult = await resultModel.getBestResultsById(user._id);
 
     users.docs = await Promise.all(
@@ -29,6 +29,8 @@ const getUsersStats = async (req, res, next) => {
           ...user._doc,
           bestUserResult: (bestResult[0] && bestResult[0]['score']) || 0,
           numberOfGames,
+          registrationDate:
+            user._doc.registrationDate && user._doc.registrationDate.toLocaleString('en-US'),
         };
       }),
     );
