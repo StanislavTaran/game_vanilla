@@ -1,21 +1,34 @@
-const { getUserByName } = require('./auth.service');
+var CryptoJS = require('crypto-js');
+const userModel = require('./auth.service');
 const { ResWithMessage } = require('../../helpers/responses');
+const { sanitize } = require('./helpers/sanitaze');
+const { validate } = require('./helpers/validation/signUpValidate');
+const { messages } = require('./helpers/validation/messages');
+
+const AUTH_CRYPTO_KEY = 'aoidhapydoaydoa76d876as9d6atd69asd6t9asrdia8sd';
 
 const login = async (req, res, next) => {
   const { body } = req;
   try {
-    const user = await getUserByName(body.name);
+    const sanitizedUser = await sanitize(body);
+    const user = await userModel.getUserByLogin(sanitizedUser.login);
     if (!user) {
       return res.render('login', { error: { message: 'Incorrect login' } });
     }
-    if (user?.pass !== body.pass) {
+    const originalPassword = CryptoJS.AES.decrypt(user.password, AUTH_CRYPTO_KEY).toString(
+      CryptoJS.enc.Utf8,
+    );
+
+    if (originalPassword !== sanitizedUser.password) {
       return res.render('login', { error: { message: 'Incorrect password' } });
     } else {
-      req.session.userId = user.id;
+      req.session.userId = user._id;
       res.redirect('/');
     }
   } catch (e) {
-    console.log(e);
+    if (e.name === 'MongoError') {
+      next(e);
+    }
     next(new ResWithMessage(500));
   }
 };
@@ -31,4 +44,42 @@ const logout = async (req, res, next) => {
   }
 };
 
-module.exports = { login, logout };
+const signup = async (req, res, next) => {
+  const { body } = req;
+  try {
+    const sanitizedUser = await sanitize(body);
+    const validatedUser = await validate(sanitizedUser);
+    const securPass = CryptoJS.AES.encrypt(validatedUser.password, AUTH_CRYPTO_KEY).toString();
+
+    const createdUser = await userModel.createUser({
+      ...validatedUser,
+      password: securPass,
+      registrationDate: new Date(),
+      registrationIP: req.ip || '',
+    });
+    req.session.userId = createdUser._id;
+    res.redirect('/');
+  } catch (e) {
+    if (e.invalidInputData) {
+      return res.render('signup', {
+        error: { message: e.message },
+        formValues: {
+          nameValue: body.name,
+          loginValue: body.login,
+        },
+      });
+    }
+    if (e.name === 'MongoError' && e.code === 11000) {
+      return res.render('signup', {
+        error: { message: messages.signup.login.notUniq },
+        formValues: {
+          nameValue: body.name,
+          loginValue: body.login,
+        },
+      });
+    }
+    next(new ResWithMessage(500));
+  }
+};
+
+module.exports = { login, logout, signup };

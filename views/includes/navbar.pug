@@ -1,0 +1,5 @@
+if(user)
+    nav(class='navbar')
+        a(class='navbar__link' href='/') Game
+        if(user && user.role === "admin")
+           a(class='navbar__link' href='/admin') Admin Page

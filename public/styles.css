@@ -17,6 +17,9 @@ body {
   display: block;
   text-decoration: none;
   text-align: center;
+  color: #000;
+  padding: 4px;
+  margin: 0 4px;
 }
 /*BUTTONS*/
 .button {
@@ -44,10 +47,13 @@ body {
   text-align: center;
   font-size: 26px;
 }
+
+.input:invalid {border-color: red;}
+.input:valid {border-color: green;}
 /*HEADER*/
 .header {
   background-color: tomato;
-  height: 80px;
+  height: 120px;
   margin-bottom: 40px;
   display: flex;
   justify-content: space-around;
@@ -60,6 +66,25 @@ body {
   margin: 0;
   color: #751f6b;
   font-style: italic;
+}
+
+.navbar{
+  display: block;
+  width: 100%;
+  padding: 4px 15px;
+  background-color: #e1dcdc;;
+}
+
+.navbar__link{
+  display: inline-block;
+  padding: 4px;
+  margin: 0 6px;
+  text-decoration: none;
+  border: 2px solid tomato;
+  border-radius: 4px;
+}
+.navbar__link:hover{
+  border-radius: 8px;
 }
 /*SECTION*/
 .section {

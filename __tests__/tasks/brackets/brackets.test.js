@@ -1,6 +1,4 @@
-const {
-  checkIsValidString,
-} = require('../../../modules/tasks/tasks.controller');
+const { checkIsValidString } = require('../../../modules/tasks/tasks.controller');
 const { positive, negative } = require('./fixtures');
 const { postToRoute } = require('../../helpers');
 

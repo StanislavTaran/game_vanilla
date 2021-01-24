@@ -1,6 +1,4 @@
-const {
-  convertRomanToArabic,
-} = require('../../../modules/tasks/tasks.controller');
+const { convertRomanToArabic } = require('../../../modules/tasks/tasks.controller');
 const { positive, negative } = require('./fixtures');
 const { postToRoute } = require('../../helpers');
 

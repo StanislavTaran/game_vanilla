@@ -1,0 +1,63 @@
+.user-table{
+    text-align: center;
+    border: 2px solid #000;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+}
+
+.user-table th{
+    background-color: tomato;
+}
+
+.user-table td,
+.user-table th{
+    border: 2px solid black;
+}
+.user-table tr:first-child td {
+    border-top: 0;
+}
+.user-table tr td:first-child {
+    border-left: 0;
+}
+.user-table tr:last-child td {
+    border-bottom: 0;
+}
+.user-table tr td:last-child {
+    border-right: 0;
+}
+
+.user-table__text{
+    display: block;
+}
+
+.admin__paginate{
+    display: flex;
+    justify-content: center;
+}
+
+.admin__paginate-button{
+    display: block;
+    text-decoration: none;
+    margin: 8px;
+    padding: 4px;
+    background-color: #888888;
+    text-align: center;
+    border: 2px solid #000;
+    border-radius: 4px;
+}
+.admin__paginate-button:hover{
+    cursor: pointer;
+}
+
+.admin__paginate-button--disabled {
+    background-color: #eee;
+    pointer-events: none;
+    cursor: default;
+}
+
+.admin__paginate-text{
+    display: block;
+    line-height: 2.5rem;
+}
+

@@ -1,36 +1,71 @@
-const fs = require('fs').promises;
-const uuid = require('uuid').v4;
-const resultsPath = './db/db.json';
+const mongoose = require('mongoose');
+const { resultSchema } = require('./entities/result.schema');
 
-const getResults = async () => {
-  try {
-    const results = await fs
-      .readFile(resultsPath, 'utf-8')
-      .then(res => JSON.parse(res))
+class Result {
+  constructor() {
+    this.result = mongoose.model('result', resultSchema);
+  }
+
+  getResults = async (query = {}) => {
+    return await this.result
+      .find(query)
+      .then(docs => docs)
       .catch(error => {
         throw error;
       });
-    return results;
-  } catch (e) {
-    throw new Error(e);
-  }
-};
+  };
 
-const saveResult = async result => {
-  try {
-    const results = await fs
-      .readFile(resultsPath, 'utf-8')
-      .then(res => JSON.parse(res))
+  getTop10Results = async () => {
+    return await this.result
+      .find({})
+      .sort({ score: -1 })
+      .limit(10)
+      .then(docs => {
+        return docs;
+      })
       .catch(error => {
         throw error;
       });
-    const resultWithId = { id: uuid(), ...result };
-    results.push(resultWithId);
-    await fs.writeFile(resultsPath, JSON.stringify(results));
-    return resultWithId;
-  } catch (e) {
-    throw new Error(e);
-  }
-};
+  };
 
-module.exports = { saveResult, getResults };
+  getBestResultsById = async userId => {
+    return await this.result
+      .find({ userId })
+      .sort({ score: -1 })
+      .limit(1)
+      .then(doc => doc)
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  getGamesQtyById = async userId => {
+    return await this.result
+      .find({ userId })
+      .count()
+      .then(doc => doc)
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  getResultsByName = async name => {
+    return await this.result
+      .find({ name })
+      .then(doc => doc)
+      .catch(error => {
+        throw error;
+      });
+  };
+
+  saveResult = async data => {
+    return await this.result
+      .create(data)
+      .then(doc => doc)
+      .catch(error => {
+        throw error;
+      });
+  };
+}
+
+module.exports = new Result();
